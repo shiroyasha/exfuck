@@ -1,60 +1,28 @@
 defmodule Exfuck do
-
-  @initial_state %{
-    :tape => [0],
-    :tape_pointer => 0,
-    :code => "",
-    :code_pointer => 0,
-    :output => []
-  }
+  alias Exfuck.ProgramState, as: State
 
   def run(code) do
-    state = %{ @initial_state | :code => code }
-
-    result_state = do_run(state)
-
-    result_state[:output] |> List.to_string
+    code |> State.new |> do_run |> State.output
   end
 
   defp do_run(state) do
-    if state[:code_pointer] < String.length(state[:code]) do
-      new_state = run_instruction(state, current_instruction(state))
-
-      display_state new_state
-
-      do_run %{new_state | :code_pointer => state[:code_pointer] + 1}
+    if State.finished?(state) do
+      state
     else
       state
+      |> run_instruction(State.instruction(state))
+      |> State.display
+      |> State.increment_code_pointer
+      |> do_run
     end
   end
 
-  defp current_instruction(state) do
-    String.at(state[:code], state[:code_pointer])
-  end
-
-  defp current_value(state) do
-    Enum.at(state[:tape], state[:tape_pointer])
-  end
-
-  defp display_state(state) do
-    IO.puts "tape: #{state[:tape]}"
-    IO.puts "tape_pointer: #{state[:tape_pointer]}"
-    IO.puts "code: #{state[:code]}"
-    IO.puts "code_pointer: #{state[:code_pointer]}"
-    IO.puts "output: #{state[:output]}"
-  end
-
-
   defp run_instruction(state, ".") do
-    %{state | :output => state[:output] ++ [current_value(state)]}
+    state |> State.save
   end
 
   defp run_instruction(state, "+") do
-    new_tape = List.replace_at(state[:tape],
-                               state[:tape_pointer],
-                               current_value(state) + 1)
-
-    %{state | :tape => new_tape}
+    state |> State.increment_value
   end
 
 end
