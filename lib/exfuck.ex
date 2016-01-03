@@ -1,0 +1,2 @@
+defmodule Exfuck do
+end
