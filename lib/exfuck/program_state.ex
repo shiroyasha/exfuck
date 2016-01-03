@@ -25,6 +25,20 @@ defmodule Exfuck.ProgramState do
     %{state | :code_pointer => state.code_pointer + 1}
   end
 
+  def increment_tape_pointer(state) do
+    tape = if length(state.tape) <= state.tape_pointer + 1 do
+             state.tape ++ [0]
+           else
+             state.tape
+           end
+
+    %{state | :tape => tape, :tape_pointer => state.tape_pointer + 1}
+  end
+
+  def decrement_tape_pointer(state) do
+    %{state | :tape_pointer => state.tape_pointer - 1}
+  end
+
   def increment_value(state) do
     new_value = value(state) + 1
     new_tape = List.replace_at(state.tape, state.tape_pointer, new_value)
@@ -33,17 +47,7 @@ defmodule Exfuck.ProgramState do
   end
 
   def save(state) do
-    %{state | :output => state.output ++ [value(state)]}
-  end
-
-  def display(state) do
-    IO.puts "tape: #{state.tape}"
-    IO.puts "tape_pointer: #{state.tape_pointer}"
-    IO.puts "code: #{state.code}"
-    IO.puts "code_pointer: #{state.code_pointer}"
-    IO.puts "output: #{state.output}"
-
-    state
+    %{state | :output => [value(state) | state.output]}
   end
 
 end

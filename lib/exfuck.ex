@@ -11,7 +11,7 @@ defmodule Exfuck do
     else
       state
       |> run_instruction(State.instruction(state))
-      |> State.display
+      #|> IO.inspect(width: 120)
       |> State.increment_code_pointer
       |> do_run
     end
@@ -23,6 +23,14 @@ defmodule Exfuck do
 
   defp run_instruction(state, "+") do
     state |> State.increment_value
+  end
+
+  defp run_instruction(state, ">") do
+    state |> State.increment_tape_pointer
+  end
+
+  defp run_instruction(state, "<") do
+    state |> State.decrement_tape_pointer
   end
 
 end

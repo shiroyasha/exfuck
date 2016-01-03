@@ -8,6 +8,12 @@ defmodule ExfuckTest do
     assert Exfuck.run(code) == "\n"
   end
 
+  test "movement" do
+    code = "++++++++++>+++++++++++<<.>."
+
+    assert Exfuck.run(code) == "\n\v"
+  end
+
   # test "hello world compilation" do
   #   hello_world = """
 # +++++ +++++             initialize counter (cell #0) to 10
