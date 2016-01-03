@@ -2,6 +2,18 @@ defmodule ExfuckTest do
   use ExUnit.Case
   doctest Exfuck
 
+  test "display current pointer" do
+    code = "."
+
+    assert Exfuck.run(code) == "0"
+  end
+
+  test "simple increment" do
+    code = "+++."
+
+    assert Exfuck.run(code) == "3"
+  end
+
   test "hello world compilation" do
     hello_world = """
 +++++ +++++             initialize counter (cell #0) to 10
@@ -27,6 +39,6 @@ defmodule ExfuckTest do
 > .                     print '\n'
     """
 
-    assert Exfuck.run(@hello_world) == "Hello world!\n"
+    assert Exfuck.run(hello_world) == "Hello world!\n"
   end
 end
