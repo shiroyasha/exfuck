@@ -26,6 +26,12 @@ defmodule ExfuckTest do
     assert Exfuck.run(code) == <<1, 2>>
   end
 
+  test "calculating 3*3 with a loop" do
+    code = "+++[>+++<-]>."
+
+    assert Exfuck.run(code) == <<9>>
+  end
+
   # test "hello world compilation" do
   #   hello_world = """
 # +++++ +++++             initialize counter (cell #0) to 10

@@ -11,7 +11,7 @@ defmodule Exfuck do
     else
       state
       |> run_instruction(State.instruction(state))
-      #|> IO.inspect(width: 120)
+      |> IO.inspect(width: 120)
       |> State.increment_code_pointer
       |> do_run
     end
@@ -35,6 +35,42 @@ defmodule Exfuck do
 
   defp run_instruction(state, "<") do
     state |> State.decrement_tape_pointer
+  end
+
+  defp run_instruction(state, "[") do
+    if State.value(state) == 0 do
+      move_to_closing_bracket(state)
+    else
+      state
+    end
+  end
+
+  defp run_instruction(state, "]") do
+    if State.value(state) != 0 do
+      move_to_opening_bracket(state)
+    else
+      state
+    end
+  end
+
+  defp move_to_closing_bracket(state) do
+    if State.instruction(state) != "]" do
+      state
+      |> State.increment_code_pointer
+      |> move_to_closing_bracket
+    else
+      state
+    end
+  end
+
+  defp move_to_opening_bracket(state) do
+    if State.instruction(state) != "[" do
+      state
+      |> State.decrement_code_pointer
+      |> move_to_opening_bracket
+    else
+      state
+    end
   end
 
 end

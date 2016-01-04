@@ -25,6 +25,10 @@ defmodule Exfuck.ProgramState do
     %{state | :code_pointer => state.code_pointer + 1}
   end
 
+  def decrement_code_pointer(state) do
+    %{state | :code_pointer => state.code_pointer - 1}
+  end
+
   def increment_tape_pointer(state) do
     tape = if length(state.tape) <= state.tape_pointer + 1 do
              state.tape ++ [0]
