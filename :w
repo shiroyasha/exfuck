@@ -1,0 +1,43 @@
+defmodule Exfuck.Tape do
+  defstruct array: [0], position: 0
+
+  def new do
+    %Exfuck.Tape{}
+  end
+
+  def value(tape) do
+    Enum.at(tape.array, state.position)
+  end
+
+  def set(tape, value) do
+    %{tape | :array => List.replace_at(state.array, state.position, value)}
+  end
+
+  def move_left(tape) do
+    %{tape | :position => tape.position - 1}
+  end
+
+  def move_right(state, ) do
+    tape = if length(state.tape) <= state.tape_pointer + 1 do
+             state.tape ++ [0]
+           else
+             state.tape
+           end
+
+    %{state | :tape => tape, :tape_pointer => state.tape_pointer + 1}
+  end
+
+  defp adjust_tape_size(tape) do
+    if length(state.array) <= state.position do
+      %{tape | :array => tape.array ++ [0] } |> adjust_tape_size
+    else
+      state.tape
+    end
+  end
+
+
+  def save(state) do
+    %{state | :output => state.output ++ [value(state)]}
+  end
+
+end
