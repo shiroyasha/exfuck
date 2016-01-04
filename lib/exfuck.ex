@@ -22,7 +22,11 @@ defmodule Exfuck do
   end
 
   defp run_instruction(state, "+") do
-    state |> State.increment_value
+    state |> State.set_value(State.value(state) + 1)
+  end
+
+  defp run_instruction(state, "-") do
+    state |> State.set_value(State.value(state) - 1)
   end
 
   defp run_instruction(state, ">") do

@@ -3,15 +3,27 @@ defmodule ExfuckTest do
   doctest Exfuck
 
   test "display current pointer" do
-    code = "++++++++++."
+    code = "+."
 
-    assert Exfuck.run(code) == "\n"
+    assert Exfuck.run(code) == <<1>>
+  end
+
+  test "increment" do
+    code = "+."
+
+    assert Exfuck.run(code) == <<1>>
+  end
+
+  test "decrement" do
+    code = "++.-."
+
+    assert Exfuck.run(code) == <<2, 1>>
   end
 
   test "movement" do
-    code = "++++++++++>+++++++++++<<.>."
+    code = "+>++<.>."
 
-    assert Exfuck.run(code) == "\n\v"
+    assert Exfuck.run(code) == <<1, 2>>
   end
 
   # test "hello world compilation" do

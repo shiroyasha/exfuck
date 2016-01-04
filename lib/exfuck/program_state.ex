@@ -39,15 +39,14 @@ defmodule Exfuck.ProgramState do
     %{state | :tape_pointer => state.tape_pointer - 1}
   end
 
-  def increment_value(state) do
-    new_value = value(state) + 1
+  def set_value(state, new_value) do
     new_tape = List.replace_at(state.tape, state.tape_pointer, new_value)
 
     %{state | :tape => new_tape}
   end
 
   def save(state) do
-    %{state | :output => [value(state) | state.output]}
+    %{state | :output => state.output ++ [value(state)]}
   end
 
 end
