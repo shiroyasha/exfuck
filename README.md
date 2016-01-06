@@ -2,6 +2,9 @@
 
 Brainfuck interpreter written in Elixir.
 
+![Exfuck logo](https://raw.githubusercontent.com/shiroyasha/exfuck/master/logo.jpg)
+
+
 
 ## Installation
 
