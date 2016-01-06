@@ -5,6 +5,7 @@ defmodule Exfuck.Mixfile do
     [app: :exfuck,
      version: "0.1.0",
      elixir: "~> 1.1",
+     description: "Brainfuck interpreter written in elixir",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      package: package,
